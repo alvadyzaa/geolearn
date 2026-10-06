@@ -312,7 +312,7 @@ function renderList(){
     (!f||c.continent===f)&&(!q||c.name_id.toLowerCase().includes(q)||c.name_en.toLowerCase().includes(q)||(c.capital||"").toLowerCase().includes(q)));
   rows.slice(0,300).forEach(c=>{
     const b=document.createElement("button"); b.className="country-card";
-    b.innerHTML=`${flagImg(c, 80, "flag-card")}<strong>${c.name_id}</strong><small>${c.continent} • ${c.capital}</small>`;
+    b.innerHTML=`${flagImg(c, 80, "flag-card")}<span class="cc-text"><strong>${c.name_id}</strong><small>${c.continent} • ${c.capital}</small></span>`;
     b.onclick=()=>openModal(c);
     grid.appendChild(b);
   });
