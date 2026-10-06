@@ -91,11 +91,107 @@ function confetti(){
 async function shareScore(text){
   const data={title:"LearnGeo 2026", text, url:location.href};
   if(navigator.share){ try{ await navigator.share(data); return; }catch(e){ if(e&&e.name==="AbortError") return; } }
-  try{ await navigator.clipboard.writeText(text+" "+location.href); alert("Skor disalin! Tempel ke WA / IG 📋"); }
-  catch(e){ prompt("Salin skormu:", text); }
+  try{ await navigator.clipboard.writeText(text+" "+location.href); alert(t("share_ok")); }
+  catch(e){ prompt(t("share_prompt"), text); }
 }
 function sumRows(hist){
   return hist.map((h,i)=>`<div class="sum-row">${flagImg({cca2:h.c2||"",name_id:h.n,flagEmoji:h.f||"🏳️"},40,"flag-card")}<span>${i+1}. ${h.n}</span><b>${h.ok?"✅":"❌"}${h.pts!=null?" • +"+fmtID(h.pts):""}</b></div>`).join("");
+}
+
+function sumRows(hist){
+  return hist.map((h,i)=>`<div class="sum-row">${flagImg({cca2:h.c2||"",name_id:h.n,flagEmoji:h.f||"🏳️"},40,"flag-card")}<span>${i+1}. ${h.n}</span><b>${h.ok?"✅":"❌"}${h.pts!=null?" • +"+fmtID(h.pts):""}</b></div>`).join("");
+}
+
+/* ---------- Bahasa ID/EN ---------- */
+let LANG=localStorage.getItem("lg_lang")||"id";
+const T={
+nav_home:["Beranda","Home"],nav_country:["Tebak Negara","Guess the Country"],nav_continent:["Tebak Benua","Guess the Continent"],nav_explore:["Jelajah","Explore"],nav_list:["Negara","Countries"],
+brand_sub:["Edisi Dunia 2026","2026 World Edition"],
+hero_h1a:["Belajar geografi dunia","Learning world geography"],hero_h1b:["semudah main game.","is as easy as playing a game."],
+hero_p:["Tidak perlu hafal nama jalan. Di sini kamu menebak <b>benua</b> dan <b>negara</b> dari 250 negara dan teritori (data 2026), lalu langsung dapat info pentingnya: ibu kota, mata uang, kode telepon, bahasa, populasi.","No need to memorize street names. Here you guess <b>continents</b> and <b>countries</b> from 250 countries and territories (2026 data), then instantly get the key facts: capital, currency, dial code, languages, population."],
+cta_country:["Mulai Tebak Negara","Start country quiz"],cta_continent:["Tebak Benua","Continent quiz"],cta_map:["Buka Peta","Open map"],
+stat_loaded:["negara dimuat","countries loaded"],stat_cont:["benua / region","continents"],stat_best_c:["skor terbaik negara","best country score"],stat_best_b:["skor terbaik benua","best continent score"],
+feat_head:["Negara sorotan, diacak tiap dibuka","Featured country, shuffled on load"],feat_shuffle:["Acak lagi","Shuffle"],feat_all:["Semua negara","All countries"],
+sec_modes:["Pilih mode belajar","Choose a mode"],
+m1_tag:["Mulai dari sini","Start here"],m1_t:["Tebak Negara","Guess the Country"],
+m1_d:["Lihat bendera dan petunjuk ibu kota, tebak dari 4 pilihan. 10 ronde per game, ada bonus beruntun.","See the flag and capital hints, pick from 4 options. 10 rounds per game, with streak bonus."],
+m1_b:["Mulai tebak 10 negara","Start guessing 10 countries"],
+m2_t:["Tebak Benua","Guess the Continent"],m2_d:["Negara ditampilkan, kamu tebak benuanya: Asia, Afrika, Eropa, dst.","A country is shown, you guess its continent: Asia, Africa, Europe, and more."],m2_b:["Mulai tebak 10 benua","Start guessing 10 continents"],
+m3_t:["Jelajah Peta","Explore the Map"],m3_d:["Klik negara mana pun di peta dunia interaktif 2026 untuk info lengkap.","Click any country on the interactive 2026 world map for full details."],m3_b:["Buka peta dunia","Open the world map"],
+qn_title:["Tebak Negara","Guess the Country"],qn_sub:["10 soal • +10 poin benar • bonus beruntun","10 questions • +10 pts per correct answer • streak bonus"],
+qn_level:["Tingkat:","Level:"],lv_easy:["Mudah (bendera + ibu kota + benua)","Easy (flag + capital + continent)"],lv_mid:["Sedang (bendera + benua)","Medium (flag + continent)"],lv_hard:["Sulit (bendera saja)","Hard (flag only)"],
+qn_ready:["Siap main?","Ready to play?"],qn_ready_p:["Kamu akan diberi bendera + petunjuk. Pilih jawaban yang benar dari 4 opsi.","You get a flag plus hints. Pick the correct answer from 4 options."],
+qn_start:["Mulai Game","Start Game"],best:["Skor terbaik:","Best score:"],
+w_score:["Skor","Score"],w_streak:["Beruntun","Streak"],w_round:["Soal {r}/{m}","Question {r}/{m}"],
+qn_q:["Negara apakah ini?","Which country is this?"],qn_next:["Soal berikutnya →","Next question →"],
+w_retry:["Main lagi","Play again"],w_share:["Bagikan","Share"],qn_study:["Belajar dulu","Study first"],
+qn_res:["Skor: {s} / {m}","Score: {s} / {m}"],
+qn_d_hi:["Luar biasa! Kamu master geografi.","Amazing! You are a geography master."],qn_d_mid:["Bagus! Sedikit lagi sempurna.","Good! Almost perfect."],qn_d_low:["Ayo belajar di menu Negara lalu coba lagi!","Study the Countries menu, then try again!"],
+qn_fb_ok:["Benar! Ini {n}.","Correct! This is {n}."],qn_fb_no:["Kurang tepat. Ini {n}.","Not quite. This is {n}."],
+qn_fb1:["Ibu kota: {k} • Benua: {b}","Capital: {k} • Continent: {b}"],qn_fb2:["{cur} • Tel: {tel} • Populasi: {pop}","{cur} • Tel: {tel} • Population: {pop}"],
+cl_cap:["Ibu kota: ","Capital: "],cl_pop:["Pop: ±{m} jt","Pop: ±{m}M"],cl_cont:["Benua: ","Continent: "],
+qb_title:["Tebak Benua","Guess the Continent"],qb_sub:["10 soal • Asia, Afrika, Eropa, Amerika Utara, Amerika Selatan, Oseania","10 questions • Asia, Africa, Europe, North America, South America, Oceania"],
+qb_ready:["Seberapa hafal peta benua?","How well do you know the continents?"],qb_ready_p:["Contoh: Jepang ada di Asia. Brasil ada di Amerika Selatan.","Example: Japan is in Asia. Brazil is in South America."],
+qb_q:["{n} ada di benua apa?","Which continent is {n} in?"],
+qb_fb:["{n} ada di {b}. Ibu kota: {k}.","{n} is in {b}. Capital: {k}."],qb_wrong_pre:["Bukan {c}. ","Not {c}. "],
+qb_map:["Lihat peta","View map"],qb_res:["Skor: {s}","Score: {s}"],
+qb_d_hi:["Peta benua di luar kepala!","You know the continents by heart!"],qb_d_low:["Ayo jelajahi peta lalu coba lagi!","Explore the map, then try again!"],
+ex_title:["Jelajah Peta Dunia 2026","Explore the 2026 World Map"],ex_desc:["Klik negara mana pun untuk info lengkap: pemimpin, ibu kota, mata uang, kode telepon dan populasi.","Click any country for full details: leader, capital, currency, dial code, and population."],
+ex_search_ph:["Cari negara… mis. Jepang, Brasil, Mesir","Search countries… e.g. Japan, Brazil, Egypt"],
+ex_credit:["Basemap: Esri World Street Map / OpenStreetMap (gratis, tanpa API key) • Batas: Natural Earth (2026) • Data pemimpin per 2026, bisa berubah.","Basemap: Esri World Street Map / OpenStreetMap (free, no API key) • Borders: Natural Earth (2026) • Leader data as of 2026, may change."],
+ex_empty_t:["Klik negara di peta","Click a country on the map"],ex_empty_p:["Atau cari lewat kolom di atas. Info lengkap akan muncul di sini.","Or search above. Full details will appear here."],
+li_title:["Semua Negara","All Countries"],li_search_ph:["Cari negara / ibu kota…","Search country / capital…"],
+f_all:["Semua benua","All continents"],f_Asia:["Asia","Asia"],f_Afrika:["Afrika","Africa"],f_Eropa:["Eropa","Europe"],"f_Amerika Utara":["Amerika Utara","North America"],"f_Amerika Selatan":["Amerika Selatan","South America"],f_Oseania:["Oseania","Oceania"],
+li_count:["negara • data 2026 • semua berbahasa Indonesia","countries • 2026 data"],li_empty:["Tidak ketemu. Coba kata kunci lain.","No match. Try another keyword."],
+m_close:["Tutup","Close"],
+in_cap:["Ibu kota","Capital"],in_cur:["Mata uang","Currency"],in_tel:["Kode telepon","Dial code"],in_lang:["Bahasa","Languages"],in_pop:["Populasi","Population"],in_area:["Luas","Area"],
+in_pop_u:["jiwa","people"],in_nodata:["Data tidak tersedia","Not available"],in_noleader:["Belum ada data","No data"],
+feat_sub:["{b} • Ibu kota: {k}","{b} • Capital: {k}"],
+data_ok:["{n} negara + bendera dimuat dari data lokal 2026. Siap main!","{n} countries + flags loaded from 2026 local data. Ready to play!"],
+data_fail:["countries.json tidak terbaca (buka via http://localhost:8000, jangan double-click file). Memakai data darurat.","countries.json is unreadable (open via http://localhost:8000, not by double-clicking the file). Using emergency data."],
+ms_tiles:["Memuat ubin peta (Esri, gratis tanpa kunci)…","Loading map tiles (Esri, free, no key)…"],
+ms_tiles_ok:["Ubin peta OK. Memuat batas 250 negara…","Map tiles OK. Loading 250 country borders…"],
+ms_switched:["Sumber {a} gagal, beralih ke {b}…","{a} failed, switching to {b}…"],
+ms_allfail:["Semua sumber ubin peta gagal dimuat. Periksa koneksi internet.","All map tile sources failed. Check your connection."],
+ms_ready:["Peta siap: {f} wilayah digambar, {c} cocok dengan database 250 negara. Klik negara mana pun.","Map ready: {f} areas drawn, {c} matched to the 250-country database. Click any country."],
+ms_geofail:["Gagal memuat batas negara (butuh internet ke raw.githubusercontent.com). Ubin peta tetap bisa dipakai.","Country borders failed to load (needs internet to raw.githubusercontent.com). Map tiles still work."],
+ms_chosen:["Kamu memilih {n}. Lihat panel di samping untuk detailnya.","You picked {n}. See the side panel for details."],
+ms_nomatch_map:["{n} tidak ada di database 250 negara.","{n} is not in the 250-country database."],
+ms_found:["Ditemukan: {n}. Lihat detailnya di panel.","Found: {n}. See details in the panel."],
+ms_nofind:['Tidak ada negara bernama "{q}".','No country named "{q}".'],
+ms_nomatch_search:["Tidak ada negara yang cocok.","No matching country."],
+filewarn:['Halaman ini dibuka sebagai file langsung, jadi peta, ikon, dan data 250 negara tidak bisa dimuat. Jalankan <b>python -m http.server 8000</b> di folder ini lalu buka <b>http://localhost:8000</b>.','This page was opened directly as a file, so the map, icons, and 250-country data cannot load. Run <b>python -m http.server 8000</b> in this folder, then open <b>http://localhost:8000</b>.'],
+share_negara:["LearnGeo: aku dapat skor {s} di Tebak Negara! Berani lawan?","LearnGeo: I scored {s} in Guess the Country! Beat me if you can?"],
+share_benua:["LearnGeo: aku dapat skor {s} di Tebak Benua! Berani lawan?","LearnGeo: I scored {s} in Guess the Continent! Beat me if you can?"],
+share_ok:["Skor disalin! Tempel ke WA / IG","Score copied! Paste it to WA / IG"],share_prompt:["Salin skormu:","Copy your score:"],
+ft:["<b>LearnGeo by Alva</b> - dibuat untuk edukasi.","<b>LearnGeo by Alva</b> - made for education."],
+totop:["Kembali ke atas","Back to top"],snd:["Suara on/off","Sound on/off"],
+w_correct:["Benar!","Correct!"]
+};
+const t=(k,v)=>{ let s=(T[k]?T[k][LANG==="en"?1:0]:k); if(v) for(const key in v) s=String(s).replace("{"+key+"}",v[key]); return s; };
+const BENUA_EN={"Asia":"Asia","Afrika":"Africa","Eropa":"Europe","Amerika Utara":"North America","Amerika Selatan":"South America","Oseania":"Oceania","Antarktika":"Antarctica"};
+const ROLES_EN={"Presiden":"President","Raja":"King","Ratu":"Queen","Perdana Menteri":"Prime Minister","Paus":"Pope","Emir":"Emir","Sultan":"Sultan","Pemimpin":"Leader","Gubernur (Belanda)":"Governor (Netherlands)","Raja (Belanda)":"King (Netherlands)","Presiden (transisi)":"Transitional President","Penasihat Kepala (interim)":"Chief Adviser (interim)","Emir (de facto)":"Emir (de facto)","Dewan Federal":"Federal Council","Presidensi Kolektif":"Collective Presidency","Presidensi kolektif bergilir":"Rotating collective presidency","Wali Kapten":"Captains Regent","Dua wali (bergilir)":"Two Captains Regent (rotating)","Kepala Eksekutif":"Chief Executive","Ketua (militer)":"Chairman (military)","Ketua (transisi)":"Chairman (transitional)","Kepala Negara":"Head of State","Pemimpin Tertinggi":"Supreme Leader","Adipati Agung":"Grand Duke","Pangeran":"Prince","Pangeran (Prancis & Uskup)":"Co-Prince (France & Bishop)","Presiden (terpecah)":"Disputed President","Presiden (sengketa)":"Disputed President"};
+const LANGS_EN={"Inggris":"English","Prancis":"French","Spanyol":"Spanish","Arab":"Arabic","Portugis":"Portuguese","Jerman":"German","Rusia":"Russian","Mandarin":"Mandarin","Jepang":"Japanese","Korea":"Korean","Hindi":"Hindi","Indonesia":"Indonesian","Melayu":"Malay","Belanda":"Dutch","Italia":"Italian","Turki":"Turkish","Urdu":"Urdu","Bengali":"Bengali","Persia":"Persian","Thai":"Thai","Vietnam":"Vietnamese","Filipino":"Filipino","Swahili":"Swahili","Yunani":"Greek","Polandia":"Polish","Ukraina":"Ukrainian","Swedia":"Swedish","Norwegia":"Norwegian","Denmark":"Danish","Finlandia":"Finnish","Ibrani":"Hebrew","Hongaria":"Hungarian","Ceko":"Czech","Rumania":"Romanian","Bulgaria":"Bulgarian","Serbia":"Serbian","Kroasia":"Croatian","Slovakia":"Slovak","Slovenia":"Slovenian","Katalan":"Catalan","Tamil":"Tamil","Telugu":"Telugu","Marathi":"Marathi","Gujarati":"Gujarati","Punjabi":"Punjabi","Malayalam":"Malayalam","Kannada":"Kannada","Myanmar":"Burmese","Khmer":"Khmer","Laos":"Lao","Mongolia":"Mongolian","Kazakh":"Kazakh","Uzbek":"Uzbek","Kirgistan":"Kyrgyz","Tajik":"Tajik","Turkmen":"Turkmen","Azerbaijan":"Azerbaijani","Armenia":"Armenian","Georgia":"Georgian","Amharik":"Amharic","Somalia":"Somali","Yoruba":"Yoruba","Igbo":"Igbo","Hausa":"Hausa","Zulu":"Zulu","Xhosa":"Xhosa","Afrikaans":"Afrikaans","Nepali":"Nepali","Sinhala":"Sinhala","Dhivehi":"Dhivehi","Dzongkha":"Dzongkha","Pashto":"Pashto","Dari":"Dari","Kurdi":"Kurdish","Malta":"Maltese","Islandia":"Icelandic","Irlandia":"Irish","Welsh":"Welsh","Basque":"Basque","Galisia":"Galician","Luksemburg":"Luxembourgish","Estonia":"Estonian","Latvia":"Latvian","Lituania":"Lithuanian","Belarus":"Belarusian","Moldova":"Moldovan","Makedonia":"Macedonian","Albania":"Albanian","Bosnia":"Bosnian","Montenegro":"Montenegrin","Faroe":"Faroese","Manx":"Manx","Samoa":"Samoan","Tonga":"Tongan","Fiji":"Fijian","Maori":"Maori","Hawaii":"Hawaiian","Chamorro":"Chamorro","Carolina":"Carolinian","Marshall":"Marshallese","Nauru":"Nauruan","Palau":"Palauan","Tokelau":"Tokelauan","Tuvalu":"Tuvaluan","Bislama":"Bislama","Tetum":"Tetum","Swati":"Swati","Sotho":"Sotho","Tswana":"Tswana","Shona":"Shona","Ndebele":"Ndebele","Venda":"Venda","Tsonga":"Tsonga","Malagasi":"Malagasy","Komoro":"Comorian","Kreol Seychelles":"Seychellois Creole","Kreol Mauritius":"Mauritian Creole","Papiamento":"Papiamento","Guarani":"Guaraní","Quechua":"Quechua","Aymara":"Aymara","Greenland":"Greenlandic","Kirundi":"Kirundi","Rwanda":"Kinyarwanda","Lingala":"Lingala","Tshiluba":"Tshiluba","Sango":"Sango"};
+const cname=c=>LANG==="en"?c.name_en:c.name_id;
+const cbenua=c=>LANG==="en"?(BENUA_EN[c.continent]||c.continent):c.continent;
+const langName=l=>LANG==="en"?(LANGS_EN[l]||l):l;
+const roleName=r=>LANG==="en"?(ROLES_EN[r]||r):r;
+function paintLangBtn(){
+  $("btnLang").textContent=LANG==="id"?"EN":"ID";
+  $("btnLang").title=LANG==="id"?"Ganti ke English":"Switch to Indonesian";
+  $("btnSound").title=t("snd"); $("toTop").title=t("totop");
+}
+function applyLang(){
+  document.documentElement.lang=LANG;
+  document.querySelectorAll("[data-t]").forEach(el=>{el.textContent=t(el.dataset.t);});
+  document.querySelectorAll("[data-t-html]").forEach(el=>{el.innerHTML=t(el.dataset.tHtml);});
+  document.querySelectorAll("[data-t-ph]").forEach(el=>{el.placeholder=t(el.dataset.tPh);});
+  paintLangBtn(); paintLegend(); refreshCounts();
+  if(!$("modalBackdrop").classList.contains("hidden")&&state.modalC){
+    const c=state.countries.find(x=>x.cca3===state.modalC); if(c) openModal(c);
+  } else if(!$("infoContent").classList.contains("hidden")&&state.lastC){
+    const c=state.countries.find(x=>x.cca3===state.lastC); if(c) showPanel(c);
+  }
 }
 
 /* ---------- Navigasi ---------- */
@@ -124,13 +220,31 @@ async function loadCountries(){
   refreshCounts();
 }
 function refreshCounts(){
-  $("statTotal").textContent = state.countries.length;
+  if(!state.counted && state.countries.length>12){ state.counted=true; countUp($("statTotal"), state.countries.length); }
+  else $("statTotal").textContent = state.countries.length;
   $("dataStatus").textContent = state.live
-    ? `✓ ${state.countries.length} negara + bendera dimuat dari data lokal 2026. Siap main!`
-    : `! countries.json tidak terbaca (buka via http://localhost:8000, jangan double-click file). Memakai data darurat.`;
-  $("daftarCount").textContent = `${state.countries.length} negara • data 2026 • semua berbahasa Indonesia`;
+    ? "✓ "+t("data_ok",{n:state.countries.length})
+    : "! "+t("data_fail");
+  $("daftarCount").textContent = `${state.countries.length} ${t("li_count")}`;
   paintFeatured();
   renderList();
+  buildMarquee();
+}
+function countUp(el, target){
+  if(!el) return;
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches){ el.textContent=target; return; }
+  const t0=performance.now(), dur=900;
+  (function step(now){
+    const p=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-p,3);
+    el.textContent=Math.round(target*e);
+    if(p<1) requestAnimationFrame(step);
+  })(t0);
+}
+function buildMarquee(){
+  const box=$("flagStrip"); if(!box||!state.countries.length) return;
+  const picks=shuffle(state.countries.filter(c=>c.population>2000000)).slice(0,36);
+  const html=picks.map(c=>`<img src="${flagSvg(c)}" alt="${cname(c)}" title="${cname(c)}" loading="lazy" onerror="this.remove()">`).join("");
+  box.innerHTML=html+html;
 }
 
 /* ---------- KUIS NEGARA ---------- */
@@ -156,19 +270,20 @@ function nextQn(){
   const c=ord[(q.round-1)%ord.length]; q.current=c;
   const hard = level==="sulit";
   const opts = shuffle([c, ...distractors(c,3,!hard)]);
-  $("qnRound").textContent=`Soal ${q.round}/${TOTAL_ROUNDS}`;
+  $("qnRound").textContent=t("w_round",{r:q.round,m:TOTAL_ROUNDS});
   $("qnBar").style.width=((q.round-1)/TOTAL_ROUNDS*100)+"%";
   $("qnScore").textContent=q.score; $("qnStreak").textContent=q.streak;
   const clues=[];
-  if(level==="mudah"){ clues.push("Ibu kota: "+c.capital, c.continent, "Pop: ±"+fmtID(Math.round(c.population/1e6))+" jt"); }
-  else if(level==="sedang"){ clues.push("Benua: "+c.continent); }
+  if(level==="mudah"){ clues.push(t("cl_cap")+c.capital, cbenua(c), t("cl_pop",{m:fmtID(Math.round(c.population/1e6))})); }
+  else if(level==="sedang"){ clues.push(t("cl_cont")+cbenua(c)); }
   $("qnClues").innerHTML=clues.map(t=>`<span class="chip">${t}</span>`).join("");
   $("qnFlag").innerHTML = flagImg(c, 160, "flag-quiz");
   $("qnFeedback").className="feedback hidden"; $("qnFeedback").innerHTML="";
   $("qnNext").classList.add("hidden");
   const box=$("qnOptions"); box.innerHTML="";
   opts.forEach(o=>{
-    const b=document.createElement("button"); b.className="opt"; b.textContent=o.name_id;
+    const b=document.createElement("button"); b.className="opt"; b.textContent=cname(o);
+    b.dataset.ok=o.cca3===c.cca3?"1":"0";
     b.onclick=()=>answerQn(b,o); box.appendChild(b);
   });
 }
@@ -177,7 +292,7 @@ function answerQn(btn, chosen){
   const c=q.current, ok = chosen.cca3===c.cca3;
   document.querySelectorAll("#qnOptions .opt").forEach(b=>{
     b.disabled=true;
-    if(b.textContent===c.name_id) b.classList.add("correct");
+    if(b.dataset.ok==="1") b.classList.add("correct");
     else if(b===btn && !ok) b.classList.add("wrong");
   });
   if(ok){ q.streak++; const pts=10+(q.streak>=3?2*(q.streak-2):0); q.score+=pts; q.hist.push({n:c.name_id,ok:true,pts,c2:c.cca2,f:c.flagEmoji}); Snd.ok(); }
@@ -186,8 +301,8 @@ function answerQn(btn, chosen){
   $("qnBar").style.width=(q.round/TOTAL_ROUNDS*100)+"%";
   const f=$("qnFeedback");
   f.className="feedback "+(ok?"ok":"no");
-  f.innerHTML=(ok?`✅ <b>Benar!</b> Ini <b>${c.name_id}</b>.`:`❌ Kurang tepat. Ini <b>${c.name_id}</b>.`)
-    +`<br>Ibu kota: <b>${c.capital}</b> • Benua: <b>${c.continent}</b><br>${c.currency.code} (${c.currency.name} ${c.currency.symbol}) • Tel: ${c.phone} • Populasi: ${c.population?fmtID(c.population):"data tidak tersedia"}`;
+  f.innerHTML=(ok?"✅ ":"❌ ")+(ok?t("qn_fb_ok",{n:`<b>${cname(c)}</b>`}):t("qn_fb_no",{n:`<b>${cname(c)}</b>`}))
+    +`<br>${t("qn_fb1",{k:`<b>${c.capital}</b>`,b:`<b>${cbenua(c)}</b>`})}<br>${t("qn_fb2",{cur:`${c.currency.code} (${c.currency.name} ${c.currency.symbol})`,tel:c.phone,pop:c.population?fmtID(c.population):t("in_nodata")})}`;
   $("qnNext").classList.remove("hidden");
 }
 function endQn(){
@@ -197,15 +312,15 @@ function endQn(){
   localStorage.setItem("lg_best_negara",best);
   $("statBestNegara").textContent=best; $("bestNegaraTxt").textContent=best;
   resultIcon("qnResultEmoji", q.score, 80, 50);
-  $("qnResultTitle").textContent=`Skor: ${q.score} / ${TOTAL_ROUNDS*10+20}`;
-  $("qnResultDesc").textContent = q.score>=80?"Luar biasa! Kamu master geografi 🌍":q.score>=50?"Bagus! Sedikit lagi sempurna.":"Ayo belajar di menu Negara lalu coba lagi!";
+  $("qnResultTitle").textContent=t("qn_res",{s:q.score,m:TOTAL_ROUNDS*10+20});
+  $("qnResultDesc").textContent = q.score>=80?t("qn_d_hi"):q.score>=50?t("qn_d_mid"):t("qn_d_low");
   $("qnSummary").innerHTML=sumRows(q.hist||[]);
   if(q.score>=80){ confetti(); Snd.win(); }
 }
 $("btnStartNegara").onclick=()=>{ Snd.click(); startNegara(); };
 $("btnRetryNegara").onclick=()=>{ Snd.click(); startNegara(); };
 $("qnNext").onclick=()=>{ Snd.click(); nextQn(); };
-$("btnShareNegara").onclick=()=>shareScore(`🌍 LearnGeo: aku dapat skor ${state.qn.score} di Tebak Negara! Berani lawan?`);
+$("btnShareNegara").onclick=()=>shareScore(t("share_negara",{s:state.qn.score}));
 
 /* ---------- KUIS BENUA ---------- */
 function startBenua(){
@@ -219,16 +334,17 @@ function nextQb(){
   if(q.round>TOTAL_ROUNDS) return endQb();
   const ord=(q.order&&q.order.length)?q.order:state.countries;
   const c=ord[(q.round-1)%ord.length]; q.current=c;
-  $("qbRound").textContent=`Soal ${q.round}/${TOTAL_ROUNDS}`;
+  $("qbRound").textContent=t("w_round",{r:q.round,m:TOTAL_ROUNDS});
   $("qbBar").style.width=((q.round-1)/TOTAL_ROUNDS*100)+"%";
   $("qbScore").textContent=q.score; $("qbStreak").textContent=q.streak;
   $("qbFlag").innerHTML = flagImg(c, 160, "flag-quiz");
-  $("qbName").textContent=`${c.name_id} ada di benua apa?`;
+  $("qbName").textContent=t("qb_q",{n:cname(c)});
   $("qbFeedback").className="feedback hidden"; $("qbFeedback").innerHTML="";
   $("qbNext").classList.add("hidden");
   const box=$("qbOptions"); box.innerHTML="";
   shuffle(BENUA_LIST).forEach(bn=>{
-    const b=document.createElement("button"); b.className="opt"; b.textContent=bn;
+    const b=document.createElement("button"); b.className="opt";
+    b.textContent=LANG==="en"?(BENUA_EN[bn]||bn):bn; b.dataset.v=bn;
     b.onclick=()=>answerQb(b,bn); box.appendChild(b);
   });
 }
@@ -237,7 +353,7 @@ function answerQb(btn, chosen){
   const c=q.current, ok=chosen===c.continent;
   document.querySelectorAll("#qbOptions .opt").forEach(b=>{
     b.disabled=true;
-    if(b.textContent===c.continent) b.classList.add("correct");
+    if(b.dataset.v===c.continent) b.classList.add("correct");
     else if(b===btn&&!ok) b.classList.add("wrong");
   });
   if(ok){ q.streak++; q.score+=10+(q.streak>=3?2*(q.streak-2):0); q.hist.push({n:c.name_id,ok:true,c2:c.cca2,f:c.flagEmoji}); Snd.ok(); }
@@ -246,7 +362,8 @@ function answerQb(btn, chosen){
   $("qbBar").style.width=(q.round/TOTAL_ROUNDS*100)+"%";
   const f=$("qbFeedback");
   f.className="feedback "+(ok?"ok":"no");
-  f.innerHTML=(ok?`✅ <b>Benar!</b> `:`❌ Bukan ${chosen}. `)+`<b>${c.name_id}</b> ada di <b>${c.continent}</b>. Ibu kota: ${c.capital}.`;
+  const disp=LANG==="en"?(BENUA_EN[chosen]||chosen):chosen;
+  f.innerHTML=(ok?"✅ "+t("w_correct")+" ":("❌ "+t("qb_wrong_pre",{c:disp})))+t("qb_fb",{n:`<b>${cname(c)}</b>`,b:`<b>${cbenua(c)}</b>`,k:c.capital});
   $("qbNext").classList.remove("hidden");
 }
 function endQb(){
@@ -256,53 +373,61 @@ function endQb(){
   localStorage.setItem("lg_best_benua",best);
   $("statBestBenua").textContent=best; $("bestBenuaTxt").textContent=best;
   resultIcon("qbResultEmoji", q.score, 80, 50);
-  $("qbResultTitle").textContent=`Skor: ${q.score}`;
-  $("qbResultDesc").textContent=q.score>=80?"Peta benua di luar kepala!":"Ayo jelajahi peta lalu coba lagi!";
+  $("qbResultTitle").textContent=t("qb_res",{s:q.score});
+  $("qbResultDesc").textContent=q.score>=80?t("qb_d_hi"):t("qb_d_low");
   $("qbSummary").innerHTML=sumRows(q.hist||[]);
   if(q.score>=80){ confetti(); Snd.win(); }
 }
 $("btnStartBenua").onclick=()=>{ Snd.click(); startBenua(); };
 $("btnRetryBenua").onclick=()=>{ Snd.click(); startBenua(); };
 $("qbNext").onclick=()=>{ Snd.click(); nextQb(); };
-$("btnShareBenua").onclick=()=>shareScore(`🗺️ LearnGeo: aku dapat skor ${state.qb.score} di Tebak Benua! Berani lawan?`);
+$("btnShareBenua").onclick=()=>shareScore(t("share_benua",{s:state.qb.score}));
 
 /* ---------- INFO HTML ---------- */
 function leaderOf(c){
   const L = state.leaders[c.cca3];
   if(L && L[1]) return {role:L[0]||"Pemimpin", name:L[1]};
-  return {role:"Pemimpin", name:"Belum ada data"};
+  return {role:"Pemimpin", name:t("in_noleader")};
 }
 function infoHTML(c, withClose){
   const ld = leaderOf(c);
+  const bc = BENUA_COLORS[c.continent]||"#64748b";
+  const sub = LANG==="en" ? `${c.name_id} • ${cbenua(c)}` : `${c.name_en} • ${cbenua(c)}`;
   return `
-  <div class="modal-head">
-    <div><div class="flag-big">${flagImg(c, 160, "flag-modal")}</div>
-    <h3 style="margin:.4rem 0">${c.name_id}</h3>
-    <p class="muted" style="margin:0">${c.name_en} • ${c.continent}</p></div>
-    ${withClose?`<button class="x" onclick="modalClose()" title="Tutup">${U("i-x-mark")}</button>`:""}
+  <div class="m-hero" style="background:${bc}1f">
+    <div class="m-flag">${flagImg(c, 160, "flag-modal")}</div>
+    <div class="m-title">
+      <h3>${cname(c)}</h3>
+      <p class="muted">${sub}</p>
+      <div class="chip-row" style="margin:.35rem 0 0">
+        <span class="chip">${c.phone}</span><span class="chip">${c.currency.code}</span><span class="chip">${cbenua(c)}</span>
+      </div>
+    </div>
+    ${withClose?`<button class="x" onclick="modalClose()" title="${t("m_close")}">${U("i-x-mark")}</button>`:""}
   </div>
   <dl class="kv">
-    <dt>${U("i-identification")} ${ld.role}</dt><dd>${ld.name}</dd>
-    <dt>${U("i-building-office-2")} Ibu kota</dt><dd>${c.capital}</dd>
-    <dt>${U("i-banknotes")} Mata uang</dt><dd>${c.currency.code} • ${c.currency.name} ${c.currency.symbol}</dd>
-    <dt>${U("i-phone")} Kode telepon</dt><dd>${c.phone}</dd>
-    <dt>${U("i-language")} Bahasa</dt><dd>${c.languages.join(", ")}</dd>
-    <dt>${U("i-users")} Populasi</dt><dd>${c.population?fmtID(c.population)+" jiwa":"Data tidak tersedia"}</dd>
-    <dt>${U("i-arrows-pointing-out")} Luas</dt><dd>${fmtID(Math.round(c.area))} km²</dd>
+    <dt>${U("i-identification")} ${roleName(ld.role)}</dt><dd>${ld.name}</dd>
+    <dt>${U("i-building-office-2")} ${t("in_cap")}</dt><dd>${c.capital}</dd>
+    <dt>${U("i-banknotes")} ${t("in_cur")}</dt><dd>${c.currency.code} • ${c.currency.name} ${c.currency.symbol}</dd>
+    <dt>${U("i-phone")} ${t("in_tel")}</dt><dd>${c.phone}</dd>
+    <dt>${U("i-language")} ${t("in_lang")}</dt><dd>${c.languages.map(langName).join(", ")}</dd>
+    <dt>${U("i-users")} ${t("in_pop")}</dt><dd>${c.population?fmtID(c.population)+" "+t("in_pop_u"):t("in_nodata")}</dd>
+    <dt>${U("i-arrows-pointing-out")} ${t("in_area")}</dt><dd>${fmtID(Math.round(c.area))} km²</dd>
   </dl>
   <div class="row-btns">
-    <button class="btn ghost" onclick="modalClose()">Tutup</button>
+    <button class="btn ghost" onclick="modalClose()">${t("m_close")}</button>
   </div>`;
 }
 function showPanel(c){
+  state.lastC=c.cca3;
   $("infoEmpty").classList.add("hidden");
   const box=$("infoContent"); box.classList.remove("hidden");
   box.innerHTML=infoHTML(c, false);
 }
-window.modalClose=()=>$("modalBackdrop").classList.add("hidden");
+window.modalClose=()=>{ state.modalC=null; $("modalBackdrop").classList.add("hidden"); };
 $("modalBackdrop").addEventListener("click",e=>{ if(e.target.id==="modalBackdrop") window.modalClose(); });
 document.addEventListener("keydown",e=>{ if(e.key==="Escape") window.modalClose(); });
-function openModal(c){ $("modalCard").innerHTML=infoHTML(c, true); $("modalBackdrop").classList.remove("hidden"); }
+function openModal(c){ state.modalC=c.cca3; $("modalCard").innerHTML=infoHTML(c, true); $("modalBackdrop").classList.remove("hidden"); }
 
 /* ---------- DAFTAR NEGARA ---------- */
 function renderList(){
@@ -312,11 +437,11 @@ function renderList(){
     (!f||c.continent===f)&&(!q||c.name_id.toLowerCase().includes(q)||c.name_en.toLowerCase().includes(q)||(c.capital||"").toLowerCase().includes(q)));
   rows.slice(0,300).forEach(c=>{
     const b=document.createElement("button"); b.className="country-card";
-    b.innerHTML=`${flagImg(c, 80, "flag-card")}<span class="cc-text"><strong>${c.name_id}</strong><small>${c.continent} • ${c.capital}</small></span>`;
+    b.innerHTML=`${flagImg(c, 80, "flag-card")}<span class="cc-text"><strong>${cname(c)}</strong><small>${cbenua(c)} • ${c.capital}</small></span>`;
     b.onclick=()=>openModal(c);
     grid.appendChild(b);
   });
-  if(!rows.length) grid.innerHTML=`<p class="muted">Tidak ketemu. Coba kata kunci lain.</p>`;
+  if(!rows.length) grid.innerHTML=`<p class="muted">${t("li_empty")}</p>`;
 }
 $("listSearch").addEventListener("input",renderList);
 $("filterBenua").addEventListener("change",renderList);
@@ -365,13 +490,13 @@ function hoverStyle(feat){ const s=baseStyle(feat); s.weight=2.5; s.fillOpacity=
 function paintLegend(){
   const box=$("mapLegend"); if(!box) return;
   const order=["Asia","Afrika","Eropa","Amerika Utara","Amerika Selatan","Oseania"];
-  box.innerHTML=order.map(b=>`<span class="lg-item"><i style="background:${BENUA_COLORS[b]}"></i>${b}</span>`).join("");
+  box.innerHTML=order.map(b=>`<span class="lg-item"><i style="background:${BENUA_COLORS[b]}"></i>${LANG==="en"?(BENUA_EN[b]||b):b}</span>`).join("");
 }
 function mapStatus(t){ const el=$("mapStatus"); if(el) el.textContent=t; }
 async function initMap(){
   if(state.mapInit){ setTimeout(()=>state.map&&state.map.invalidateSize(),200); return; }
   state.mapInit=true;
-  mapStatus("Memuat ubin peta (Esri, gratis tanpa kunci)…");
+  mapStatus(t("ms_tiles"));
   const map=L.map("map",{worldCopyJump:true,minZoom:2,maxZoom:12}).setView([20,15],2);
   state.map=map;
   // Semua sumber tile gratis tanpa API key. Gagal di satu, pindah otomatis ke berikutnya.
@@ -388,12 +513,12 @@ async function initMap(){
       const gagal=TILE_SETS[tileIdx].name;
       tileIdx++; tileErr=0;
       tiles.setUrl(TILE_SETS[tileIdx].url);
-      mapStatus(`Sumber ${gagal} gagal, beralih ke ${TILE_SETS[tileIdx].name}…`);
+      mapStatus(t("ms_switched",{a:gagal,b:TILE_SETS[tileIdx].name}));
     } else if(tileErr>24){
-      mapStatus("Semua sumber ubin peta gagal dimuat. Periksa koneksi internet.");
+      mapStatus(t("ms_allfail"));
     }
   });
-  tiles.on("load",()=>mapStatus("Ubin peta OK. Memuat batas 250 negara…"));
+  tiles.on("load",()=>mapStatus(t("ms_tiles_ok")));
   state.byIso={}; state.countries.forEach(c=>state.byIso[c.cca3]=c);
   paintLegend();
   let features=0, foundCountries=0;
@@ -416,12 +541,12 @@ async function initMap(){
               state.geoLayer.resetStyle();
               e.target.setStyle({color:"#111111",weight:3,opacity:1,fillOpacity:.85});
               e.target.bringToFront();
-              if(c){ showPanel(c); mapStatus(`Kamu memilih ${c.name_id}. Lihat panel di samping untuk detailnya.`); }
+              if(c){ showPanel(c); mapStatus(t("ms_chosen",{n:cname(c)})); }
               else{
                 $("infoEmpty").classList.add("hidden");
                 $("infoContent").classList.remove("hidden");
                 $("infoContent").innerHTML=`<h3>${nm||iso||"Wilayah"}</h3><p class="muted">Data info belum tersedia untuk kode ${iso}. Coba negara lain, atau cari lewat kolom pencarian.</p>`;
-                mapStatus(`${nm||iso||"Wilayah"} tidak ada di database 250 negara.`);
+                mapStatus(t("ms_nomatch_map",{n:nm||iso||"Wilayah"}));
               }
             }
           });
@@ -434,9 +559,9 @@ async function initMap(){
   if(!state.geoLayer){
     const box=$("mapLegend");
     if(box) box.innerHTML=`<span class="lg-item">Batas negara gagal dimuat. Periksa koneksi lalu buka ulang tab Jelajah.</span>`;
-    mapStatus("Gagal memuat batas negara (butuh internet ke raw.githubusercontent.com). Ubin peta tetap bisa dipakai.");
+    mapStatus(t("ms_geofail"));
   } else {
-    mapStatus(`Peta siap: ${features} wilayah digambar, ${foundCountries} cocok dengan database 250 negara. Klik negara mana pun.`);
+    mapStatus(t("ms_ready",{f:features,c:foundCountries}));
   }
   // search peta
   let mapSearchTimer=null;
@@ -445,8 +570,8 @@ async function initMap(){
     mapSearchTimer=setTimeout(()=>{
       const q=$("mapSearch").value.toLowerCase().trim(); if(!q) return;
       const c=state.countries.find(x=>x.name_id.toLowerCase().includes(q)||x.name_en.toLowerCase().includes(q));
-      if(c){ showPanel(c); if(c.latlng) map.flyTo(c.latlng,4,{duration:1.2}); mapStatus(`Ditemukan: ${c.name_id}. Lihat detailnya di panel.`); }
-      else mapStatus(`Tidak ada negara bernama "${q}".`);
+      if(c){ showPanel(c); if(c.latlng) map.flyTo(c.latlng,4,{duration:1.2}); mapStatus(t("ms_found",{n:cname(c)})); }
+      else mapStatus(t("ms_nofind",{q}));
     },350);
   });
 }
@@ -457,19 +582,19 @@ function paintFeatured(){
   const c=pick(pool.length?pool:state.countries);
   if(!c||!$("featFlag")) return;
   $("featFlag").innerHTML=flagImg(c,160,"flag-quiz");
-  $("featName").textContent=c.name_id;
-  $("featSub").textContent=`${c.continent} • Ibu kota: ${c.capital}`;
+  $("featName").textContent=cname(c);
+  $("featSub").textContent=t("feat_sub",{b:cbenua(c),k:c.capital});
   $("featChips").innerHTML=[
     `${c.currency.code}${c.currency.symbol?" ("+c.currency.symbol+")":""}`,
     `${c.phone}`,
-    `${c.languages[0]||"-"}`
-  ].map(t=>`<span class="chip">${t}</span>`).join("");
+    `${langName(c.languages[0]||"-")}`
+  ].map(x=>`<span class="chip">${x}</span>`).join("");
 }
 
 /* ---------- init ---------- */
 if(location.protocol==="file:"){
   document.body.insertAdjacentHTML("afterbegin",
-    `<div class="filewarn">Halaman ini dibuka sebagai file langsung, jadi peta, ikon, dan data 250 negara tidak bisa dimuat. Jalankan <b>python -m http.server 8000</b> di folder ini lalu buka <b>http://localhost:8000</b>.</div>`);
+    `<div class="filewarn">${t("filewarn")}</div>`);
 }
 $("statBestNegara").textContent=localStorage.getItem("lg_best_negara")||0;
 $("statBestBenua").textContent=localStorage.getItem("lg_best_benua")||0;
@@ -481,6 +606,21 @@ $("btnSound").onclick=()=>{
   localStorage.setItem("lg_sound",Snd.on?"1":"0");
   paintSoundBtn(); Snd.click();
 };
+$("btnLang").onclick=()=>{
+  Snd.click();
+  LANG=LANG==="id"?"en":"id";
+  localStorage.setItem("lg_lang",LANG);
+  applyLang();
+};
 $("btnShuffleFeat").onclick=()=>{ Snd.click(); paintFeatured(); };
-refreshCounts();
+/* Back-to-top: muncul setelah scroll jauh */
+const toTop=$("toTop");
+addEventListener("scroll",()=>{ toTop.classList.toggle("hidden",scrollY<600); },{passive:true});
+toTop.onclick=()=>{ Snd.click(); scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}); };
+/* Reveal-on-scroll untuk blok beranda (sekali, lalu dilepas) */
+try{
+  const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } }),{threshold:.1});
+  document.querySelectorAll(".hero-text,.hero-card,.mode-card,.stat,.section-title,.marquee").forEach(el=>{ el.classList.add("rv"); io.observe(el); });
+}catch(e){}
+applyLang();
 loadCountries();

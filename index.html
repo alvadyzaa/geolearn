@@ -18,16 +18,17 @@
       <span class="brand-badge"><svg class="ic"><use href="icons.svg#i-globe-alt"/></svg></span>
       <div>
         <strong>LearnGeo</strong>
-        <small>Edisi Dunia 2026</small>
+        <small data-t="brand_sub">Edisi Dunia 2026</small>
       </div>
     </div>
+    <button class="icon-btn" id="btnLang" title="ID/EN">EN</button>
     <button class="icon-btn" id="btnSound" title="Suara on/off"><svg class="ic"><use href="icons.svg#i-speaker-wave"/></svg></button>
     <nav class="tabs" id="mainTabs">
-      <button class="tab active" data-tab="home"><svg class="ic"><use href="icons.svg#i-home"/></svg><span>Beranda</span></button>
-      <button class="tab" data-tab="kuis-negara"><svg class="ic"><use href="icons.svg#i-flag"/></svg><span>Tebak Negara</span></button>
-      <button class="tab" data-tab="kuis-benua"><svg class="ic"><use href="icons.svg#i-globe-alt"/></svg><span>Tebak Benua</span></button>
-      <button class="tab" data-tab="jelajah"><svg class="ic"><use href="icons.svg#i-map"/></svg><span>Jelajah</span></button>
-      <button class="tab" data-tab="daftar"><svg class="ic"><use href="icons.svg#i-book-open"/></svg><span>Negara</span></button>
+      <button class="tab active" data-tab="home"><svg class="ic"><use href="icons.svg#i-home"/></svg><span data-t="nav_home">Beranda</span></button>
+      <button class="tab" data-tab="kuis-negara"><svg class="ic"><use href="icons.svg#i-flag"/></svg><span data-t="nav_country">Tebak Negara</span></button>
+      <button class="tab" data-tab="kuis-benua"><svg class="ic"><use href="icons.svg#i-globe-alt"/></svg><span data-t="nav_continent">Tebak Benua</span></button>
+      <button class="tab" data-tab="jelajah"><svg class="ic"><use href="icons.svg#i-map"/></svg><span data-t="nav_explore">Jelajah</span></button>
+      <button class="tab" data-tab="daftar"><svg class="ic"><use href="icons.svg#i-book-open"/></svg><span data-t="nav_list">Negara</span></button>
     </nav>
   </div>
 </header>
@@ -37,59 +38,60 @@
   <section id="page-home" class="page active">
     <div class="hero">
       <div class="hero-text">
-        <h1>Belajar geografi dunia <em>semudah main game.</em></h1>
-        <p>Tidak perlu hafal nama jalan. Di sini kamu menebak <b>benua</b> &amp; <b>negara</b> dari 250 negara dan teritori (data 2026), lalu langsung dapat info pentingnya: ibu kota, mata uang, kode telepon, bahasa, populasi.</p>
+        <h1><span data-t="hero_h1a">Belajar geografi dunia</span> <em data-t="hero_h1b">semudah main game.</em></h1>
+        <p data-t-html="hero_p">Tidak perlu hafal nama jalan. Di sini kamu menebak <b>benua</b> &amp; <b>negara</b> dari 250 negara dan teritori (data 2026), lalu langsung dapat info pentingnya: ibu kota, mata uang, kode telepon, bahasa, populasi.</p>
         <div class="hero-cta">
-          <button class="btn primary" data-goto="kuis-negara"><svg class="ic"><use href="icons.svg#i-play"/></svg> Mulai Tebak Negara</button>
-          <button class="btn ghost" data-goto="kuis-benua">Tebak Benua</button>
-          <button class="btn ghost" data-goto="jelajah"><svg class="ic"><use href="icons.svg#i-map"/></svg> Buka Peta</button>
+          <button class="btn primary" data-goto="kuis-negara"><svg class="ic"><use href="icons.svg#i-play"/></svg> <span data-t="cta_country">Mulai Tebak Negara</span></button>
+          <button class="btn ghost" data-goto="kuis-benua"><span data-t="cta_continent">Tebak Benua</span></button>
+          <button class="btn ghost" data-goto="jelajah"><svg class="ic"><use href="icons.svg#i-map"/></svg> <span data-t="cta_map">Buka Peta</span></button>
         </div>
         <div class="stats" id="homeStats">
-          <div class="stat"><strong id="statTotal">…</strong><span>negara dimuat</span></div>
-          <div class="stat"><strong id="statBenua">7</strong><span>benua / region</span></div>
-          <div class="stat"><strong id="statBestNegara">0</strong><span>skor terbaik negara</span></div>
-          <div class="stat"><strong id="statBestBenua">0</strong><span>skor terbaik benua</span></div>
+          <div class="stat"><strong id="statTotal">…</strong><span data-t="stat_loaded">negara dimuat</span></div>
+          <div class="stat"><strong id="statBenua">7</strong><span data-t="stat_cont">benua / region</span></div>
+          <div class="stat"><strong id="statBestNegara">0</strong><span data-t="stat_best_c">skor terbaik negara</span></div>
+          <div class="stat"><strong id="statBestBenua">0</strong><span data-t="stat_best_b">skor terbaik benua</span></div>
         </div>
         <p class="tiny muted" id="dataStatus">Memuat data negara terbaru…</p>
       </div>
       <div class="hero-map">
         <div class="hero-card">
-          <div class="hero-card-head">Negara sorotan, diacak tiap dibuka</div>
+          <div class="hero-card-head" data-t="feat_head">Negara sorotan, diacak tiap dibuka</div>
           <div class="hero-flag" id="featFlag"></div>
           <h3 id="featName">…</h3>
           <p class="muted" id="featSub">…</p>
           <div class="chip-row" id="featChips"></div>
           <div class="row-btns">
-            <button class="btn ghost" id="btnShuffleFeat"><svg class="ic"><use href="icons.svg#i-arrow-path"/></svg> Acak lagi</button>
-            <button class="btn primary" data-goto="daftar">Semua negara</button>
+            <button class="btn ghost" id="btnShuffleFeat"><svg class="ic"><use href="icons.svg#i-arrow-path"/></svg> <span data-t="feat_shuffle">Acak lagi</span></button>
+            <button class="btn primary" data-goto="daftar"><span data-t="feat_all">Semua negara</span></button>
           </div>
         </div>
       </div>
     </div>
 
-    <h2 class="section-title">Pilih mode belajar</h2>
+    <h2 class="section-title" data-t="sec_modes">Pilih mode belajar</h2>
     <div class="mode-grid">
       <article class="mode-card featured">
         <div class="mode-ico"><svg class="ic"><use href="icons.svg#i-flag"/></svg></div>
         <div class="mode-body">
-          <h3>Tebak Negara <span class="tag">Paling dimainkan</span></h3>
-          <p>Lihat bendera dan petunjuk ibu kota, tebak dari 4 pilihan. 10 ronde per game, ada bonus beruntun.</p>
+          <h3><span data-t="m1_t">Tebak Negara</span> <span class="tag" data-t="m1_tag">Mulai dari sini</span></h3>
+          <p data-t="m1_d">Lihat bendera dan petunjuk ibu kota, tebak dari 4 pilihan. 10 ronde per game, ada bonus beruntun.</p>
         </div>
-        <button class="btn primary" data-goto="kuis-negara">Mulai tebak 10 negara</button>
+        <button class="btn primary" data-goto="kuis-negara"><span data-t="m1_b">Mulai tebak 10 negara</span></button>
       </article>
       <article class="mode-card">
         <div class="mode-ico"><svg class="ic"><use href="icons.svg#i-globe-alt"/></svg></div>
-        <h3>Tebak Benua</h3>
-        <p>Negara ditampilkan, kamu tebak benuanya: Asia, Afrika, Eropa, dst.</p>
-        <button class="btn primary block" data-goto="kuis-benua">Mulai tebak 10 benua</button>
+        <h3 data-t="m2_t">Tebak Benua</h3>
+        <p data-t="m2_d">Negara ditampilkan, kamu tebak benuanya: Asia, Afrika, Eropa, dst.</p>
+        <button class="btn primary block" data-goto="kuis-benua"><span data-t="m2_b">Mulai tebak 10 benua</span></button>
       </article>
       <article class="mode-card">
         <div class="mode-ico"><svg class="ic"><use href="icons.svg#i-map"/></svg></div>
-        <h3>Jelajah Peta</h3>
-        <p>Klik negara mana pun di peta dunia interaktif 2026 untuk info lengkap.</p>
-        <button class="btn primary block" data-goto="jelajah">Buka peta dunia</button>
+        <h3 data-t="m3_t">Jelajah Peta</h3>
+        <p data-t="m3_d">Klik negara mana pun di peta dunia interaktif 2026 untuk info lengkap.</p>
+        <button class="btn primary block" data-goto="jelajah"><span data-t="m3_b">Buka peta dunia</span></button>
       </article>
     </div>
+    <div class="marquee" aria-hidden="true"><div class="mq-track" id="flagStrip"></div></div>
   </section>
 
   <!-- ============ KUIS NEGARA ============ -->
@@ -97,15 +99,15 @@
     <div class="quiz-wrap">
       <div class="quiz-head">
         <div>
-          <h2 class="h-ico"><svg class="ic"><use href="icons.svg#i-flag"/></svg> Tebak Negara</h2>
-          <p class="muted">10 soal • +10 poin benar • streak bonus +2</p>
+          <h2 class="h-ico"><svg class="ic"><use href="icons.svg#i-flag"/></svg> <span data-t="qn_title">Tebak Negara</span></h2>
+          <p class="muted" data-t="qn_sub">10 soal • +10 poin benar • bonus beruntun</p>
         </div>
         <div class="level-row">
-          <label>Tingkat:
+          <label><span data-t="qn_level">Tingkat:</span>
             <select id="levelNegara">
-              <option value="mudah">Mudah (bendera + ibu kota + benua)</option>
-              <option value="sedang" selected>Sedang (bendera + benua)</option>
-              <option value="sulit">Sulit (bendera saja)</option>
+              <option value="mudah" data-t="lv_easy">Mudah (bendera + ibu kota + benua)</option>
+              <option value="sedang" selected data-t="lv_mid">Sedang (bendera + benua)</option>
+              <option value="sulit" data-t="lv_hard">Sulit (bendera saja)</option>
             </select>
           </label>
         </div>
@@ -113,24 +115,24 @@
 
       <div id="qnSetup" class="card center">
         <div class="big-icon"><svg class="ic"><use href="icons.svg#i-flag"/></svg></div>
-        <h3>Siap main?</h3>
-        <p class="muted">Kamu akan diberi bendera + petunjuk. Pilih jawaban yang benar dari 4 opsi.</p>
-        <button class="btn primary lg" id="btnStartNegara"><svg class="ic"><use href="icons.svg#i-play"/></svg> Mulai Game</button>
-        <p class="tiny muted">Skor terbaik: <b id="bestNegaraTxt">0</b></p>
+        <h3 data-t="qn_ready">Siap main?</h3>
+        <p class="muted" data-t="qn_ready_p">Kamu akan diberi bendera + petunjuk. Pilih jawaban yang benar dari 4 opsi.</p>
+        <button class="btn primary lg" id="btnStartNegara"><svg class="ic"><use href="icons.svg#i-play"/></svg> <span data-t="qn_start">Mulai Game</span></button>
+        <p class="tiny muted"><span data-t="best">Skor terbaik:</span> <b id="bestNegaraTxt">0</b></p>
       </div>
 
       <div id="qnPlay" class="card hidden">
         <div class="progress-row">
           <span id="qnRound">Soal 1/10</span>
           <div class="progress"><div id="qnBar"></div></div>
-          <span>Skor <b id="qnScore">0</b> • Beruntun <b id="qnStreak">0</b></span>
+          <span><span data-t="w_score">Skor</span> <b id="qnScore">0</b> • <span data-t="w_streak">Beruntun</span> <b id="qnStreak">0</b></span>
         </div>
         <div class="quiz-flag" id="qnFlag">🇯🇵</div>
         <div class="chip-row center" id="qnClues"></div>
-        <h3 class="quiz-q">Negara apakah ini?</h3>
+        <h3 class="quiz-q" data-t="qn_q">Negara apakah ini?</h3>
         <div class="opt-grid" id="qnOptions"></div>
         <div id="qnFeedback" class="feedback hidden"></div>
-        <button class="btn primary block hidden" id="qnNext">Soal berikutnya →</button>
+        <button class="btn primary block hidden" id="qnNext"><span data-t="qn_next">Soal berikutnya →</span></button>
       </div>
 
       <div id="qnResult" class="card center hidden">
@@ -139,9 +141,9 @@
         <p class="muted" id="qnResultDesc"></p>
         <div id="qnSummary" style="text-align:left"></div>
         <div class="row-btns">
-          <button class="btn primary" id="btnRetryNegara">Main lagi</button>
-          <button class="btn ghost" id="btnShareNegara"><svg class="ic"><use href="icons.svg#i-share"/></svg> Bagikan</button>
-          <button class="btn ghost" data-goto="daftar"><svg class="ic"><use href="icons.svg#i-academic-cap"/></svg> Belajar dulu</button>
+          <button class="btn primary" id="btnRetryNegara"><span data-t="w_retry">Main lagi</span></button>
+          <button class="btn ghost" id="btnShareNegara"><svg class="ic"><use href="icons.svg#i-share"/></svg> <span data-t="w_share">Bagikan</span></button>
+          <button class="btn ghost" data-goto="daftar"><svg class="ic"><use href="icons.svg#i-academic-cap"/></svg> <span data-t="qn_study">Belajar dulu</span></button>
         </div>
       </div>
     </div>
@@ -152,28 +154,28 @@
     <div class="quiz-wrap">
       <div class="quiz-head">
         <div>
-          <h2 class="h-ico"><svg class="ic"><use href="icons.svg#i-globe-alt"/></svg> Tebak Benua</h2>
-          <p class="muted">10 soal • Asia, Afrika, Eropa, Amerika Utara, Amerika Selatan, Oseania</p>
+          <h2 class="h-ico"><svg class="ic"><use href="icons.svg#i-globe-alt"/></svg> <span data-t="qb_title">Tebak Benua</span></h2>
+          <p class="muted" data-t="qb_sub">10 soal • Asia, Afrika, Eropa, Amerika Utara, Amerika Selatan, Oseania</p>
         </div>
       </div>
       <div id="qbSetup" class="card center">
         <div class="big-icon"><svg class="ic"><use href="icons.svg#i-globe-alt"/></svg></div>
-        <h3>Seberapa hafal peta benua?</h3>
-        <p class="muted">Contoh: Jepang → Asia. Brasil → Amerika Selatan.</p>
-        <button class="btn primary lg" id="btnStartBenua"><svg class="ic"><use href="icons.svg#i-play"/></svg> Mulai Game</button>
-        <p class="tiny muted">Skor terbaik: <b id="bestBenuaTxt">0</b></p>
+        <h3 data-t="qb_ready">Seberapa hafal peta benua?</h3>
+        <p class="muted" data-t="qb_ready_p">Contoh: Jepang ada di Asia. Brasil ada di Amerika Selatan.</p>
+        <button class="btn primary lg" id="btnStartBenua"><svg class="ic"><use href="icons.svg#i-play"/></svg> <span data-t="qn_start">Mulai Game</span></button>
+        <p class="tiny muted"><span data-t="best">Skor terbaik:</span> <b id="bestBenuaTxt">0</b></p>
       </div>
       <div id="qbPlay" class="card hidden">
         <div class="progress-row">
           <span id="qbRound">Soal 1/10</span>
           <div class="progress"><div id="qbBar"></div></div>
-          <span>Skor <b id="qbScore">0</b> • Beruntun <b id="qbStreak">0</b></span>
+          <span><span data-t="w_score">Skor</span> <b id="qbScore">0</b> • <span data-t="w_streak">Beruntun</span> <b id="qbStreak">0</b></span>
         </div>
         <div class="quiz-flag sm" id="qbFlag">🇧🇷</div>
         <h3 class="quiz-q" id="qbName">Brasil ada di benua apa?</h3>
         <div class="opt-grid two" id="qbOptions"></div>
         <div id="qbFeedback" class="feedback hidden"></div>
-        <button class="btn primary block hidden" id="qbNext">Soal berikutnya →</button>
+        <button class="btn primary block hidden" id="qbNext"><span data-t="qn_next">Soal berikutnya →</span></button>
       </div>
       <div id="qbResult" class="card center hidden">
         <div class="big-icon" id="qbResultEmoji"></div>
@@ -181,9 +183,9 @@
         <p class="muted" id="qbResultDesc"></p>
         <div id="qbSummary" style="text-align:left"></div>
         <div class="row-btns">
-          <button class="btn primary" id="btnRetryBenua">Main lagi</button>
-          <button class="btn ghost" id="btnShareBenua"><svg class="ic"><use href="icons.svg#i-share"/></svg> Bagikan</button>
-          <button class="btn ghost" data-goto="jelajah"><svg class="ic"><use href="icons.svg#i-map"/></svg> Lihat peta</button>
+          <button class="btn primary" id="btnRetryBenua"><span data-t="w_retry">Main lagi</span></button>
+          <button class="btn ghost" id="btnShareBenua"><svg class="ic"><use href="icons.svg#i-share"/></svg> <span data-t="w_share">Bagikan</span></button>
+          <button class="btn ghost" data-goto="jelajah"><svg class="ic"><use href="icons.svg#i-map"/></svg> <span data-t="qb_map">Lihat peta</span></button>
         </div>
       </div>
     </div>
@@ -193,21 +195,21 @@
   <section id="page-jelajah" class="page">
     <div class="explore-grid">
       <div class="map-col">
-        <h2 class="h-ico"><svg class="ic"><use href="icons.svg#i-map"/></svg> Jelajah Peta Dunia 2026</h2>
-        <p class="muted compact">Klik negara mana pun untuk info lengkap: pemimpin, ibu kota, mata uang, kode telepon & populasi.</p>
+        <h2 class="h-ico"><svg class="ic"><use href="icons.svg#i-map"/></svg> <span data-t="ex_title">Jelajah Peta Dunia 2026</span></h2>
+        <p class="muted compact" data-t="ex_desc">Klik negara mana pun untuk info lengkap: pemimpin, ibu kota, mata uang, kode telepon dan populasi.</p>
         <div class="search-row">
-          <input id="mapSearch" type="search" placeholder="Cari negara… mis. Jepang, Brasil, Mesir" autocomplete="off" />
+          <input id="mapSearch" type="search" data-t-ph="ex_search_ph" placeholder="Cari negara… mis. Jepang, Brasil, Mesir" autocomplete="off" />
         </div>
         <div id="map"></div>
         <p class="tiny muted" id="mapStatus" style="margin:.45rem 0 0">Memuat peta…</p>
         <div class="legend" id="mapLegend"></div>
-        <p class="tiny muted">Basemap: Esri World Street Map / OpenStreetMap (gratis, tanpa API key) • Batas: Natural Earth (2026) • Data pemimpin per 2026, bisa berubah.</p>
+        <p class="tiny muted" data-t="ex_credit">Basemap: Esri World Street Map / OpenStreetMap (gratis, tanpa API key) • Batas: Natural Earth (2026) • Data pemimpin per 2026, bisa berubah.</p>
       </div>
       <aside class="card info-panel" id="infoPanel">
         <div class="info-empty" id="infoEmpty">
           <div class="big-icon"><svg class="ic"><use href="icons.svg#i-cursor-arrow-rays"/></svg></div>
-          <h3>Klik negara di peta</h3>
-          <p class="muted">Atau cari lewat kolom di atas. Info lengkap akan muncul di sini.</p>
+          <h3 data-t="ex_empty_t">Klik negara di peta</h3>
+          <p class="muted" data-t="ex_empty_p">Atau cari lewat kolom di atas. Info lengkap akan muncul di sini.</p>
         </div>
         <div id="infoContent" class="hidden"></div>
       </aside>
@@ -216,18 +218,18 @@
 
   <!-- ============ DAFTAR ============ -->
   <section id="page-daftar" class="page">
-    <h2 class="h-ico"><svg class="ic"><use href="icons.svg#i-book-open"/></svg> Semua Negara</h2>
+    <h2 class="h-ico"><svg class="ic"><use href="icons.svg#i-book-open"/></svg> <span data-t="li_title">Semua Negara</span></h2>
     <p class="muted" id="daftarCount">Memuat…</p>
     <div class="search-row two-col">
-      <input id="listSearch" type="search" placeholder="Cari negara / ibu kota…" autocomplete="off" />
+      <input id="listSearch" type="search" data-t-ph="li_search_ph" placeholder="Cari negara / ibu kota…" autocomplete="off" />
       <select id="filterBenua">
-        <option value="">Semua benua</option>
-        <option>Asia</option>
-        <option>Afrika</option>
-        <option>Eropa</option>
-        <option>Amerika Utara</option>
-        <option>Amerika Selatan</option>
-        <option>Oseania</option>
+        <option value="" data-t="f_all">Semua benua</option>
+        <option value="Asia" data-t="f_Asia">Asia</option>
+        <option value="Afrika" data-t="f_Afrika">Afrika</option>
+        <option value="Eropa" data-t="f_Eropa">Eropa</option>
+        <option value="Amerika Utara" data-t="f_Amerika Utara">Amerika Utara</option>
+        <option value="Amerika Selatan" data-t="f_Amerika Selatan">Amerika Selatan</option>
+        <option value="Oseania" data-t="f_Oseania">Oseania</option>
       </select>
     </div>
     <div class="country-grid" id="countryGrid"></div>
@@ -239,8 +241,10 @@
 </div>
 
 <footer>
-  <p><b>LearnGeo 2026</b> • 250 negara • Data: Natural Earth + Bank Dunia + flagcdn • Dibuat untuk belajar.</p>
+  <p data-t="ft"><b>LearnGeo by Alva</b> - dibuat untuk edukasi.</p>
 </footer>
+
+<button id="toTop" class="to-top hidden" title="Kembali ke atas">↑</button>
 
 <script src="vendor/leaflet.js"></script>
 <script src="app.js"></script>

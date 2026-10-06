@@ -93,8 +93,7 @@ main{max-width:var(--max);margin:0 auto;padding:1.2rem .9rem 4rem}
 .hero-cta{display:flex;gap:.6rem;flex-wrap:wrap;margin:1rem 0}
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;margin-top:1rem}
 .stat{background:var(--card);border:1px solid var(--border);
-  border-radius:var(--radius);padding:.75rem .9rem;animation:rise .4s ease backwards}
-.stat:nth-child(2){animation-delay:.05s}.stat:nth-child(3){animation-delay:.1s}.stat:nth-child(4){animation-delay:.15s}
+  border-radius:var(--radius);padding:.75rem .9rem}
 .stat strong{display:block;font-size:1.35rem;letter-spacing:-.02em}.stat span{color:var(--muted);font-size:.78rem}
 .hero-card{background:var(--card);border:1px solid var(--border);
   border-radius:16px;padding:1.2rem;text-align:center;box-shadow:0 20px 50px -20px #000c}
@@ -105,9 +104,12 @@ main{max-width:var(--max);margin:0 auto;padding:1.2rem .9rem 4rem}
 .section-title{margin:1.8rem 0 .8rem;letter-spacing:-.01em}
 .mode-grid{display:grid;gap:.8rem}
 .mode-card{background:var(--card);border:1px solid var(--border);
-  border-radius:16px;padding:1.1rem;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease;
-  animation:rise .4s ease backwards}
-.mode-grid>*:nth-child(2){animation-delay:.06s}.mode-grid>*:nth-child(3){animation-delay:.12s}.mode-grid>*:nth-child(4){animation-delay:.18s}
+  border-radius:16px;padding:1.1rem;transition:transform .15s ease,border-color .15s ease}
+/* Reveal-on-scroll: blok beranda muncul sekali saat terlihat. Alasan: menuntun mata ke bawah tanpa gerak tanpa akhir. */
+.rv{opacity:0;translate:0 14px;transition:opacity .45s ease,translate .45s ease}
+.rv.in{opacity:1;translate:0 0}
+.mode-grid>.rv:nth-child(2){transition-delay:.07s}.mode-grid>.rv:nth-child(3){transition-delay:.14s}
+.stats>.rv:nth-child(2){transition-delay:.06s}.stats>.rv:nth-child(3){transition-delay:.12s}.stats>.rv:nth-child(4){transition-delay:.18s}
 .mode-card:hover{transform:translateY(-3px);border-color:var(--primary)}
 .mode-card.featured{grid-column:1/-1;display:grid;gap:.4rem 1rem;align-items:center}
 .mode-card.featured .mode-ico{margin-bottom:0}
@@ -183,6 +185,7 @@ input[type=search]:focus,select:focus{border-color:var(--primary);box-shadow:0 0
 .info-empty .big-emoji{font-size:2.2rem}
 .flag-big{margin-bottom:.1rem}
 .flag-modal{max-height:120px}
+.flag-modal{max-height:120px}
 .kv{display:grid;grid-template-columns:130px 1fr;gap:.45rem .7rem;font-size:.92rem;margin:.8rem 0}
 .kv dt{color:var(--muted)} .kv dd{margin:0;font-weight:600}
 .flag-big{margin-bottom:.2rem}
@@ -206,10 +209,37 @@ input[type=search]:focus,select:focus{border-color:var(--primary);box-shadow:0 0
 .modal-backdrop{position:fixed;inset:0;background:#000000c9;z-index:100;
   display:flex;align-items:flex-end;justify-content:center;padding:0;animation:pop .2s ease}
 .modal{width:100%;max-width:560px;max-height:88vh;overflow:auto;border-radius:20px 20px 0 0;border-bottom:0}
-.modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:.6rem}
+/* Modal info negara: hero ringkas berisi bendera + fakta kilat, detail di bawah */
+.m-hero{display:flex;gap:.85rem;align-items:center;margin:-1.1rem -1.1rem .85rem;padding:1rem 1.1rem .9rem;
+  border-radius:inherit;border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:1px solid var(--border)}
+.m-flag{width:86px;flex-shrink:0}
+.m-flag img{width:100%}
+.m-title{flex:1;min-width:0}
+.m-title h3{margin:0;font-size:1.12rem;line-height:1.25}
+.m-title p{margin:.15rem 0 0;font-size:.82rem}
+#infoPanel .m-hero{margin:-.85rem -.85rem .85rem}
+.m-hero .x{margin-left:auto;flex-shrink:0}
 .x{border:1px solid var(--border);background:#ffffff10;color:var(--foreground);border-radius:10px;width:44px;height:44px;font-size:1.2rem;cursor:pointer}
 
 footer{max-width:var(--max);margin:0 auto;padding:1.2rem .9rem 6rem;color:var(--muted);font-size:.84rem;text-align:center}
+/* Back-to-top: lingkaran aksen, muncul setelah scroll 600px */
+.to-top{position:fixed;right:1rem;bottom:1.5rem;z-index:70;width:48px;height:48px;border-radius:50%;
+  background:var(--primary);color:#04121f;border:0;font-size:1.4rem;font-weight:800;cursor:pointer;
+  box-shadow:0 10px 24px -10px #38bdf8cc;transition:opacity .2s ease,transform .2s ease}
+.to-top:not(.hidden){opacity:1}
+.to-top.hidden{display:block!important;opacity:0;pointer-events:none;transform:translateY(8px)}
+/* Marquee bendera: etalase 36 bendera asli, bukti lebarnya data. Lambat, jeda saat disentuh. */
+.marquee{overflow:hidden;margin:1.4rem calc(.9rem * -1) 0;padding:.6rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.mq-track{display:flex;gap:.55rem;width:max-content;animation:mq 55s linear infinite}
+.marquee:hover .mq-track{animation-play-state:paused}
+.mq-track img{width:44px;height:32px;object-fit:cover;border-radius:6px;border:1px solid var(--border)}
+@keyframes mq{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){
+  .mq-track{animation:none;flex-wrap:wrap;width:auto}
+  .rv{opacity:1;translate:none;transition:none}
+  .page.active,.modal-backdrop,.flag-quiz,.feedback{animation:none}
+}
 .leaflet-container{font-family:inherit;background:#0a0a0d}
 
 /* Desktop */
@@ -243,5 +273,6 @@ footer{max-width:var(--max);margin:0 auto;padding:1.2rem .9rem 6rem;color:var(--
   .tab.active span{font-weight:700}
   main{padding-bottom:6.5rem}
   footer{padding-bottom:7.5rem}
+  .to-top{bottom:5.6rem;right:.8rem}
   .opt-grid.two{grid-template-columns:1fr 1fr}
 }
