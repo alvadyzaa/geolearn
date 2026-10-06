@@ -21,8 +21,6 @@
         <small data-t="brand_sub">Edisi Dunia 2026</small>
       </div>
     </div>
-    <button class="icon-btn" id="btnLang" title="ID/EN">EN</button>
-    <button class="icon-btn" id="btnSound" title="Suara on/off"><svg class="ic"><use href="icons.svg#i-speaker-wave"/></svg></button>
     <nav class="tabs" id="mainTabs">
       <button class="tab active" data-tab="home"><svg class="ic"><use href="icons.svg#i-home"/></svg><span data-t="nav_home">Beranda</span></button>
       <button class="tab" data-tab="kuis-negara"><svg class="ic"><use href="icons.svg#i-flag"/></svg><span data-t="nav_country">Tebak Negara</span></button>
@@ -30,6 +28,10 @@
       <button class="tab" data-tab="jelajah"><svg class="ic"><use href="icons.svg#i-map"/></svg><span data-t="nav_explore">Jelajah</span></button>
       <button class="tab" data-tab="daftar"><svg class="ic"><use href="icons.svg#i-book-open"/></svg><span data-t="nav_list">Negara</span></button>
     </nav>
+    <div class="top-actions">
+      <button class="icon-btn text-btn" id="btnLang" title="ID/EN">EN</button>
+      <button class="icon-btn" id="btnSound" title="Suara on/off"><svg class="ic"><use href="icons.svg#i-speaker-wave"/></svg></button>
+    </div>
   </div>
 </header>
 
@@ -241,7 +243,7 @@
 </div>
 
 <footer>
-  <p data-t="ft"><b>LearnGeo by Alva</b> - dibuat untuk edukasi.</p>
+  <p data-t-html="ft"><b>LearnGeo by Alva</b> - dibuat untuk edukasi.</p>
 </footer>
 
 <button id="toTop" class="to-top hidden" title="Kembali ke atas">↑</button>
